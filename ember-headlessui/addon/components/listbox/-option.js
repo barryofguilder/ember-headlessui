@@ -11,7 +11,12 @@ export default class ListboxOptionComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.shouldScroll = this.args.selectedValue === this.args.value;
+
+    if (this.args.selectedValue && !this.args.multiple) {
+      this.shouldScroll = this.args.selectedValue.includes(this.args.value);
+    } else {
+      this.shouldScroll = false;
+    }
   }
 
   registerOption = modifier((element) => {
@@ -32,11 +37,20 @@ export default class ListboxOptionComponent extends Component {
     this.args.setSelectedOption(this, e);
   }
 
-  get isActiveOption() {
+  get isActive() {
     return this.args.activeOptionGuid == this.guid;
   }
 
-  get isSelectedOption() {
-    return this.args.selectedOptionGuid == this.guid;
+  get isSelected() {
+    if (this.args.multiple) {
+      let selected = this.args.selectedValue ?? [];
+      return selected.includes(this.args.value);
+    } else {
+      return (
+        // allow 0 and null to as possible values
+        this.args.selectedValue !== undefined &&
+        this.args.selectedValue === this.args.value
+      );
+    }
   }
 }
