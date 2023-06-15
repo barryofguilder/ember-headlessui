@@ -1,5 +1,5 @@
 {
-  "name": "ember-headlessui",
+  "name": "@onwardcare/ember-headlessui",
   "version": "0.13.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
@@ -111,7 +111,7 @@
   },
   "packageManager": "pnpm@7.1.2",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "volta": {
     "node": "16.15.0"
