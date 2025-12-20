@@ -10,9 +10,7 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('menu', function () {
     this.route('menu-basic');
-    this.route('menu-with-popper');
     this.route('menu-with-transition');
-    this.route('menu-with-transition-and-popper');
   });
 
   this.route('listbox', function () {
