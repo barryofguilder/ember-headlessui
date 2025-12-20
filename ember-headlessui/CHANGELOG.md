@@ -2,6 +2,25 @@
   cwd: '/home/nvp/Development/OpenSource/ember-headlessui/ember-headlessui'
 }
 
+
+## v0.14.1 (2025-12-20)
+
+#### :bug: Bug Fix
+* [#193](https://github.com/GavinJoyce/ember-headlessui/pull/193) Fix Combobox click-outside behavior for non-primitive values ([@GavinJoyce](https://github.com/GavinJoyce))
+* [#190](https://github.com/GavinJoyce/ember-headlessui/pull/190) Fix Combobox emitting spurious onChange events ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### :memo: Documentation
+* [#191](https://github.com/GavinJoyce/ember-headlessui/pull/191) Update README with usage examples and local dev instructions ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### :house: Internal
+* [#195](https://github.com/GavinJoyce/ember-headlessui/pull/195) Add .env to gitignore ([@GavinJoyce](https://github.com/GavinJoyce))
+* [#194](https://github.com/GavinJoyce/ember-headlessui/pull/194) Fix build:docs to target test-app instead of addon ([@GavinJoyce](https://github.com/GavinJoyce))
+* [#192](https://github.com/GavinJoyce/ember-headlessui/pull/192) Remove incomplete menu-with-popper demo pages ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### Committers: 1
+- Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
+
+
 ## v0.14.0 (2023-08-02)
 
 #### :rocket: Enhancement
