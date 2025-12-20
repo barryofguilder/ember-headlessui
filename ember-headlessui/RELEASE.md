@@ -38,17 +38,24 @@ pnpm install
   [GitHub personal access token][generate-token] with the `repo` scope (no
   other permissions are needed). Make sure the token is available as the
   `GITHUB_AUTH` environment variable. This project uses `dotenv-cli` so you can
-  add the auth token to a `.env` file.
-
-  For instance:
+  add the auth token to a `.env` file in the `ember-headlessui/` subdirectory
+  (not the monorepo root):
 
   ```bash
-  echo "GITHUB_AUTH=abc123def456" > .env
+  echo "GITHUB_AUTH=abc123def456" > ember-headlessui/.env
   ```
 
 [generate-token]: https://github.com/settings/tokens/new?description=release-it-cli&scopes=repo
 
-- And last (but not least 😁) do your release.
+- Third, ensure you are logged in to npm:
+
+```sh
+npm login
+```
+
+- Fourth, ensure your working directory is clean (all changes committed).
+
+- And last (but not least) run your release from the monorepo root:
 
 ```sh
 pnpm release
