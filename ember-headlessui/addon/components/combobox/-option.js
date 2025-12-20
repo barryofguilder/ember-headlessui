@@ -34,8 +34,8 @@ export default class ComboboxOptionComponent extends Component {
 
     if (this.args.disabled) return;
 
-    this.args.setSelectedOption(this, e);
     this.callOnChangeWithSelectedValue();
+    this.args.setSelectedOption(this, e);
   }
 
   @action

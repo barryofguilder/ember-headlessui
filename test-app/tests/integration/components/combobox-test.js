@@ -237,6 +237,54 @@ module('Integration | Component | <Combobox>', function (hooks) {
         assert.dom(getComboboxInput()).hasValue('B');
       });
 
+      test('selecting an option puts the display value into Combobox.Input when displayValue is provided and values are objects', async function (assert) {
+        this.set('onChange', (value) => {
+          this.set('value', value);
+        });
+
+        this.setProperties({
+          value: null,
+          a: { value: 'a' },
+          b: { value: 'b' },
+          c: { value: 'c' },
+          displayValue: (option) => {
+            return option?.value?.toUpperCase() || 'None';
+          },
+        });
+
+        await render(hbs`
+          <Combobox
+            @value={{this.value}}
+            @onChange={{this.onChange}}
+            as |combobox|
+          >
+            <combobox.Input @displayValue={{this.displayValue}}/>
+            <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
+            <combobox.Options as |options|>
+              <options.Option @value={{this.a}}>Option A</options.Option>
+              <options.Option @value={{this.b}}>Option B</options.Option>
+              <options.Option @value={{this.c}}>Option C</options.Option>
+            </combobox.Options>
+          </Combobox>
+        `);
+
+        await click(getComboboxButton());
+        assertComboboxList({ state: ComboboxState.Visible });
+
+        await click(getComboboxOptions()[1]);
+        assert.dom(getComboboxInput()).hasValue('B');
+
+        await click(getComboboxButton());
+        assertComboboxList({ state: ComboboxState.Visible });
+
+        assert.dom(getComboboxInput()).hasValue('B');
+
+        await click(document.body);
+        assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
+
+        assert.dom(getComboboxInput()).hasValue('B');
+      });
+
       test('opening and closing the combobox should not trigger spurious onChange events on the input', async function (assert) {
         let inputOnChangeCallCount = 0;
         let inputOnChangeValues = [];

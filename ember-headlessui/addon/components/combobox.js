@@ -435,7 +435,8 @@ export default class ComboboxComponent extends Component {
       this.inputElement?.focus();
     }
 
-    this._originalValue = this.inputValue;
+    this._originalValue = this.args.value;
+    this.inputValue = this.args.value;
   }
 
   @action
