@@ -18,7 +18,26 @@ ember install ember-headlessui
 
 ## Usage
 
-Todo..
+See the [component examples](test-app/app/templates) for usage samples.
+
+## Local Development
+
+This is a pnpm monorepo. To run locally:
+
+```bash
+# Install dependencies
+pnpm install
+
+# Run the development server (http://localhost:4200)
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Linting
+pnpm lint
+pnpm lint:fix
+```
 
 ## Contributing
 
