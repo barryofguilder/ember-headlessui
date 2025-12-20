@@ -22,9 +22,4 @@ export default class ComboboxInputComponent extends Component {
     this.args.handleInput(event);
     this.args.onChange?.(event);
   }
-
-  @action
-  clearInput() {
-    this.args.onChange?.({ target: { value: '' } });
-  }
 }
