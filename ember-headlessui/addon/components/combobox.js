@@ -76,8 +76,6 @@ export default class ComboboxComponent extends Component {
   set isOpen(isOpen) {
     if (this.isDisabled) return;
 
-    this.inputComponent?.clearInput();
-
     if (!isOpen) {
       this._activeOptionGuid = null;
       this.optionElements = [];

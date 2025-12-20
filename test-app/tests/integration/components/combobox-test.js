@@ -236,6 +236,65 @@ module('Integration | Component | <Combobox>', function (hooks) {
 
         assert.dom(getComboboxInput()).hasValue('B');
       });
+
+      test('opening and closing the combobox should not trigger spurious onChange events on the input', async function (assert) {
+        let inputOnChangeCallCount = 0;
+        let inputOnChangeValues = [];
+
+        this.set('onInputChange', (event) => {
+          inputOnChangeCallCount++;
+          inputOnChangeValues.push(event.target.value);
+        });
+
+        this.set('onChange', (value) => {
+          this.set('value', value);
+        });
+
+        await render(hbs`
+          <Combobox
+            @value={{this.value}}
+            @onChange={{this.onChange}}
+            as |combobox|
+          >
+            <combobox.Input @onChange={{this.onInputChange}}/>
+            <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
+            <combobox.Options as |options|>
+              <options.Option @value="a">Option A</options.Option>
+              <options.Option @value="b">Option B</options.Option>
+              <options.Option @value="c">Option C</options.Option>
+            </combobox.Options>
+          </Combobox>
+        `);
+
+        assert.strictEqual(
+          inputOnChangeCallCount,
+          0,
+          'onChange should not be called initially'
+        );
+
+        await click(getComboboxButton());
+        assertComboboxList({ state: ComboboxState.Visible });
+
+        assert.strictEqual(
+          inputOnChangeCallCount,
+          0,
+          'onChange should not be called when opening the combobox'
+        );
+
+        await click(getComboboxButton());
+        assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
+
+        assert.strictEqual(
+          inputOnChangeCallCount,
+          0,
+          'onChange should not be called when closing the combobox'
+        );
+        assert.deepEqual(
+          inputOnChangeValues,
+          [],
+          'onChange should never have been called with any values'
+        );
+      });
     });
 
     module('Combobox.Label', () => {
