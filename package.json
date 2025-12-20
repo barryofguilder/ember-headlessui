@@ -46,5 +46,8 @@
   "volta": {
     "node": "18.17.0",
     "pnpm": "7.33.5"
+  },
+  "changelog": {
+    "repo": "GavinJoyce/ember-headlessui"
   }
 }
