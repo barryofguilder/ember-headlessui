@@ -3,6 +3,16 @@
 }
 
 
+
+## v0.14.2 (2025-12-22)
+
+#### :bug: Bug Fix
+* [#198](https://github.com/GavinJoyce/ember-headlessui/pull/198) Add preventDefault to Enter key handler on menu items ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### Committers: 1
+- Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
+
+
 ## v0.14.1 (2025-12-20)
 
 #### :bug: Bug Fix
