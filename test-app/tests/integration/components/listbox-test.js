@@ -1552,6 +1552,106 @@ module('Integration | Component | <Listbox>', function (hooks) {
       options.forEach((option) => assertListboxOption({}, option));
       assertActiveListboxOption(options[2]);
     });
+
+    test('should be possible to use ArrowDown to navigate when listbox has no default value and was opened via click', async function (assert) {
+      await render(hbs`
+        <Listbox as |listbox|>
+           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
+           <listbox.Options data-test="headlessui-listbox-options-1" as |options|>
+             <options.Option @value="a">
+               Option A
+             </options.Option>
+             <options.Option @value="b">
+               Option B
+             </options.Option>
+             <options.Option @value="c">
+               Option C
+             </options.Option>
+           </listbox.Options>
+         </Listbox>
+      `);
+
+      assertListboxButton({
+        state: ListboxState.InvisibleUnmounted,
+        attributes: { 'data-test': 'headlessui-listbox-button-1' },
+      });
+      assertListbox({ state: ListboxState.InvisibleUnmounted });
+
+      // Open listbox via click (not keyboard) - this sets activateBehaviour to ACTIVATE_NONE
+      await click(getListboxButton());
+
+      // Verify it is visible
+      assertListboxButton({ state: ListboxState.Visible });
+      assertListbox({
+        state: ListboxState.Visible,
+        attributes: { 'data-test': 'headlessui-listbox-options-1' },
+      });
+
+      // Verify we have listbox options
+      let options = getListboxOptions();
+      assert.strictEqual(options.length, 3);
+
+      // No option should be active initially (since no @value and opened via click)
+      assertNoActiveListboxOption();
+
+      // Press ArrowDown - this should activate the first option
+      await triggerKeyEvent(getListbox(), 'keyup', 'ArrowDown');
+      assertActiveListboxOption(options[0]);
+
+      // Press ArrowDown again - should move to second option
+      await triggerKeyEvent(getListbox(), 'keyup', 'ArrowDown');
+      assertActiveListboxOption(options[1]);
+    });
+
+    test('should be possible to use ArrowUp to navigate when listbox has no default value and was opened via click', async function (assert) {
+      await render(hbs`
+        <Listbox as |listbox|>
+           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
+           <listbox.Options data-test="headlessui-listbox-options-1" as |options|>
+             <options.Option @value="a">
+               Option A
+             </options.Option>
+             <options.Option @value="b">
+               Option B
+             </options.Option>
+             <options.Option @value="c">
+               Option C
+             </options.Option>
+           </listbox.Options>
+         </Listbox>
+      `);
+
+      assertListboxButton({
+        state: ListboxState.InvisibleUnmounted,
+        attributes: { 'data-test': 'headlessui-listbox-button-1' },
+      });
+      assertListbox({ state: ListboxState.InvisibleUnmounted });
+
+      // Open listbox via click (not keyboard) - this sets activateBehaviour to ACTIVATE_NONE
+      await click(getListboxButton());
+
+      // Verify it is visible
+      assertListboxButton({ state: ListboxState.Visible });
+      assertListbox({
+        state: ListboxState.Visible,
+        attributes: { 'data-test': 'headlessui-listbox-options-1' },
+      });
+
+      // Verify we have listbox options
+      let options = getListboxOptions();
+      assert.strictEqual(options.length, 3);
+
+      // No option should be active initially (since no @value and opened via click)
+      assertNoActiveListboxOption();
+
+      // Press ArrowUp - this should activate the last option
+      await triggerKeyEvent(getListbox(), 'keyup', 'ArrowUp');
+      assertActiveListboxOption(options[2]);
+
+      // Press ArrowUp again - should move to second option
+      await triggerKeyEvent(getListbox(), 'keyup', 'ArrowUp');
+      assertActiveListboxOption(options[1]);
+    });
   });
 
   module('Listbox `ArrowRight` key', () => {
