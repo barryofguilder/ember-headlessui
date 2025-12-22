@@ -4,6 +4,11 @@
 
 
 
+## v0.14.4 (2025-12-22)
+#
+https://github.com/GavinJoyce/ember-headlessui/pull/200
+
+
 ## v0.14.3 (2025-12-22)
 
 
