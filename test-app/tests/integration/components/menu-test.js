@@ -533,6 +533,60 @@ module('Integration | Component | <Menu>', (hooks) => {
         assert.dom(itemClicked).hasText('Item B');
       });
 
+      test('it should call preventDefault when pressing Enter on menu item', async function (assert) {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element data-test-item-a>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element data-test-item-b>
+                  Item B
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify it is open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // Activate first menu item
+        await triggerEvent('[data-test-item-a]', 'mouseover');
+
+        // Set up a listener on the menu items to capture the event after the component handles it
+        let capturedEvent = null;
+        const menuItems = find('[data-test-menu-items]');
+        const captureHandler = (event) => {
+          // We store the event after the menu component's handler has processed it
+          // Using setTimeout to check after the synchronous handler completes
+          capturedEvent = event;
+        };
+        menuItems.addEventListener('keydown', captureHandler);
+
+        // Press Enter on the menu item
+        await triggerKeyEvent('[data-test-item-a]', 'keydown', Keys.Enter);
+
+        // Clean up listener
+        menuItems.removeEventListener('keydown', captureHandler);
+
+        // Verify that preventDefault was called on the event
+        assert.true(
+          capturedEvent?.defaultPrevented,
+          'preventDefault should be called when pressing Enter on menu item'
+        );
+
+        // Verify the menu closed
+        assertClosedMenuButton('[data-test-menu-button]');
+      });
+
       test('it should be possible to use a button as a menu item and invoke it upon Enter', async function (assert) {
         let itemClicked = 0;
         this.set('onClick', (item) => (itemClicked = item.target));
