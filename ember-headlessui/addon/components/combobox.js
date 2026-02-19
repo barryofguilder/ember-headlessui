@@ -157,7 +157,10 @@ export default class ComboboxComponent extends Component {
   @action
   handleKeyDown(event) {
     if (event.key === Keys.Tab) {
-      this.inputValue = this._originalValue;
+      if (this.isOpen) {
+        this.setActiveAsSelected();
+        this.setSelectedOption(event.target, event);
+      }
       this.closeCombobox();
       return;
     }
