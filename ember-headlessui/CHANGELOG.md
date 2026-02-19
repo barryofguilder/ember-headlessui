@@ -4,6 +4,17 @@
 
 
 
+
+## v0.15.0 (2026-02-19)
+
+#### :rocket: Enhancement
+* [#202](https://github.com/GavinJoyce/ember-headlessui/pull/202) Add clear selection button and more names to combobox example ([@GavinJoyce](https://github.com/GavinJoyce))
+* [#201](https://github.com/GavinJoyce/ember-headlessui/pull/201) Make Tab key select active combobox option instead of reverting ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### Committers: 1
+- Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
+
+
 ## v0.14.4 (2025-12-22)
 #
 https://github.com/GavinJoyce/ember-headlessui/pull/200
