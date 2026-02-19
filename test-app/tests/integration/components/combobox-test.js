@@ -1897,12 +1897,16 @@ module('Integration | Component | <Combobox>', function (hooks) {
       });
 
       module('`Tab` key', () => {
-        // TODO skipping this because chrome not tabbing to next element in tab order
-        skip('pressing Tab should select the active item and move to the next DOM node', async function (assert) {
+        test('pressing Tab should select the active item and close the combobox', async function (assert) {
+          this.set('onChange', (value) => {
+            this.set('value', value);
+          });
+          this.set('value', 'b');
+
           await render(hbs`
-            <input id="before-combobox" />
-            <Combobox 
-              @value="b"
+            <Combobox
+              @value={{this.value}}
+              @onChange={{this.onChange}}
               as |combobox|
             >
               <combobox.Input/>
@@ -1913,7 +1917,6 @@ module('Integration | Component | <Combobox>', function (hooks) {
                 <options.Option @value="c">Option 3</options.Option>
               </combobox.Options>
             </Combobox>
-            <input id="after-combobox" />
           `);
 
           assertComboboxButton({
@@ -1922,34 +1925,22 @@ module('Integration | Component | <Combobox>', function (hooks) {
           });
           assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
 
-          // Open combobox
           await click(getComboboxButton());
 
-          // Select the 2nd option
           await triggerKeyEvent(
             document.activeElement,
             'keyup',
             Keys.ArrowDown
           );
 
-          // Tab to the next DOM node
           await triggerKeyEvent(document.activeElement, 'keydown', Keys.Tab);
 
-          // Verify it is closed
           assertComboboxButton({ state: ComboboxState.InvisibleUnmounted });
           assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
 
-          // That the selected value was the highlighted one
-          assert.dom(getComboboxInput()).hasValue('b');
-
-          // And focus has moved to the next element
-          await assertActiveElement(document.querySelector('#after-combobox'));
+          assert.dom(getComboboxInput()).hasValue('c');
+          assert.strictEqual(this.value, 'c');
         });
-
-        todo(
-          'pressing Shift+Tab should select the active item and move to the previous DOM node',
-          () => {}
-        );
       });
 
       module('`Escape` key', () => {
