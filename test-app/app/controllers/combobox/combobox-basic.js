@@ -8,6 +8,21 @@ const PEOPLE = [
   { id: 3, name: 'Therese Wunsch', unavailable: false },
   { id: 4, name: 'Benedict Kessler', unavailable: true },
   { id: 5, name: 'Katelyn Rohan', unavailable: false },
+  { id: 6, name: 'Alicia Waters', unavailable: false },
+  { id: 7, name: 'Marcus Chen', unavailable: false },
+  { id: 8, name: 'Priya Sharma', unavailable: false },
+  { id: 9, name: 'Oliver Grant', unavailable: true },
+  { id: 10, name: 'Sofia Ramirez', unavailable: false },
+  { id: 11, name: "James O'Brien", unavailable: false },
+  { id: 12, name: 'Yuki Tanaka', unavailable: false },
+  { id: 13, name: 'Elena Petrova', unavailable: false },
+  { id: 14, name: 'David Kim', unavailable: false },
+  { id: 15, name: 'Fatima Al-Hassan', unavailable: false },
+  { id: 16, name: 'Lucas Fernandez', unavailable: true },
+  { id: 17, name: 'Amara Okafor', unavailable: false },
+  { id: 18, name: 'Henrik Larsson', unavailable: false },
+  { id: 19, name: 'Mei Lin', unavailable: false },
+  { id: 20, name: 'Noah Patel', unavailable: false },
 ];
 
 export default class ComboboxBasicController extends Controller {
@@ -27,6 +42,12 @@ export default class ComboboxBasicController extends Controller {
   @action
   setSelectedPerson(person) {
     this.selectedPerson = person;
+  }
+
+  @action
+  clearSelection() {
+    this.selectedPerson = null;
+    this._filter = '';
   }
 
   @action
