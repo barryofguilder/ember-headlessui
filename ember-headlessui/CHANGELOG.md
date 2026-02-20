@@ -5,6 +5,9 @@
 
 
 
+https://github.com/GavinJoyce/ember-headlessui/pull/204 barryofguilder ## v0.16.0 (2026-02-20)
+
+
 ## v0.15.0 (2026-02-19)
 
 #### :rocket: Enhancement
