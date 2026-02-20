@@ -11,7 +11,14 @@ export default class ListboxOptionComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.shouldScroll = this.args.selectedValue === this.args.value;
+
+    if (this.args.multiple) {
+      // TODO: Might be good to have it scroll to the first selected item here,
+      // but not sure of the best approach to do this.
+      this.shouldScroll = false;
+    } else {
+      this.shouldScroll = this.args.selectedValue === this.args.value;
+    }
   }
 
   registerOption = modifier((element) => {
@@ -32,11 +39,20 @@ export default class ListboxOptionComponent extends Component {
     this.args.setSelectedOption(this, e);
   }
 
-  get isActiveOption() {
+  get isActive() {
     return this.args.activeOptionGuid == this.guid;
   }
 
-  get isSelectedOption() {
-    return this.args.selectedOptionGuid == this.guid;
+  get isSelected() {
+    if (this.args.multiple) {
+      let selected = this.args.selectedValue ?? [];
+      return selected.includes(this.args.value);
+    } else {
+      return (
+        // allow 0 and null to as possible values
+        this.args.selectedValue !== undefined &&
+        this.args.selectedValue === this.args.value
+      );
+    }
   }
 }
